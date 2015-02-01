@@ -1,0 +1,26 @@
+apply plugin: 'java'
+
+sourceCompatibility = 1.5
+version = '0.1'
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.9'
+    distributionUrl = 'http://services.gradle.org/distributions/gradle-1.9-all.zip'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile 'com.github.sarxos:webcam-capture:0.3.10'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'org.szernex.wcss.Main'
+    }
+
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+}
